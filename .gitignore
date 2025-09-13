@@ -1,0 +1,6 @@
+.*.sw?
+.bash_history
+.container_id
+.local/
+.tags
+data/
