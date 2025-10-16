@@ -16,10 +16,10 @@ docker build -t tinyproxy:latest .
 
 # Create
 mkdir -p $(pwd)/data
-docker run -d --restart unless-stopped -p 8888:8888 -v "$(pwd)/data:/data" tinyproxy:latest > .container_id
+docker run -d --restart unless-stopped -p 8888:8888 -v "$(pwd)/data:/data" --name myproxy tinyproxy:latest > .container_id
 
 # logs
-docker logs -f $(cat .container_id)
+docker logs -f myproxy
 ```
 
 If `$(pwd)/data/tinyproxy.conf` does not exist, the `run.sh` script will create a simple one, with basic HTTP auth

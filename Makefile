@@ -1,5 +1,6 @@
 DATA_PATH = $(CURDIR)/data
 CONTAINER_ID_PATH = $(CURDIR)/.container_id
+CONTAINER_NAME = myproxy
 .PHONY: build create logs restart rm start stop
 
 build:
@@ -7,19 +8,19 @@ build:
 
 create:
 	mkdir -p $(DATA_PATH)
-	docker run -d --restart unless-stopped -p 8888:8888 -v "$(DATA_PATH):/data" tinyproxy:latest > $(CONTAINER_ID_PATH)
-	@echo "Container ID saved in $(CONTAINER_ID_PATH)"
+	docker run -d --restart unless-stopped -p 8888:8888 -v "$(DATA_PATH):/data" --name $(CONTAINER_NAME) tinyproxy:latest > $(CONTAINER_ID_PATH)
+	@echo "Container $(CONTAINER_NAME) started. ID saved in $(CONTAINER_ID_PATH)"
 
 logs:
-	docker logs -f $(shell cat $(CONTAINER_ID_PATH))
+	docker logs -f $(CONTAINER_NAME)
 
 restart: stop start
 
 rm:
-	docker rm $(shell cat $(CONTAINER_ID_PATH))
+	docker rm $(CONTAINER_NAME)
 
 start:
-	docker start $(shell cat $(CONTAINER_ID_PATH))
+	docker start $(CONTAINER_NAME)
 
 stop:
-	docker stop $(shell cat $(CONTAINER_ID_PATH))
+	docker stop $(CONTAINER_NAME)
