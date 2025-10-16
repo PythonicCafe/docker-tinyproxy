@@ -16,7 +16,7 @@ docker build -t tinyproxy:latest .
 
 # Create
 mkdir -p $(pwd)/data
-docker run -d -p 8888:8888 -v "$(pwd)/data:/data" tinyproxy:latest > .container_id
+docker run -d --restart unless-stopped -p 8888:8888 -v "$(pwd)/data:/data" tinyproxy:latest > .container_id
 
 # logs
 docker logs -f $(cat .container_id)

@@ -7,7 +7,7 @@ build:
 
 create:
 	mkdir -p $(DATA_PATH)
-	docker run -d -p 8888:8888 -v "$(DATA_PATH):/data" tinyproxy:latest > $(CONTAINER_ID_PATH)
+	docker run -d --restart unless-stopped -p 8888:8888 -v "$(DATA_PATH):/data" tinyproxy:latest > $(CONTAINER_ID_PATH)
 	@echo "Container ID saved in $(CONTAINER_ID_PATH)"
 
 logs:
